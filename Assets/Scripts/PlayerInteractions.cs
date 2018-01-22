@@ -7,6 +7,11 @@ public class PlayerInteractions : MonoBehaviour
 	public float detectionRadius;
 	public LayerMask layer;
 
+	Inventory playerInventory; 
+	void Start()
+	{
+		playerInventory = transform.GetComponent<Inventory>();
+	}
 	// Use this for initialization
 	void Update(){
 		Collider2D found = Physics2D.OverlapCircle(transform.position, detectionRadius, layer);
@@ -14,9 +19,13 @@ public class PlayerInteractions : MonoBehaviour
 		{
 			if(found.CompareTag("Bucket"))
 			{
-				//Enable button to pick it up
-				transform.GetComponent<Inventory>().addBucketToInventory(found.GetComponent<Bucket>());
-				//Remove 
+				Bucket foundBucket = found.GetComponentInParent<Bucket>();
+				if (foundBucket != null)
+				{
+					print("This exists, and is the color: " + foundBucket.color);
+				}
+				playerInventory.addBucketToInventory(foundBucket);
+				Destroy(found.gameObject);
 			}
 			else if(found.CompareTag("Well"))
 			{
@@ -25,12 +34,12 @@ public class PlayerInteractions : MonoBehaviour
 			}
 			else if(found.CompareTag("Key"))
 			{
-				transform.GetComponent<Inventory>().addKeyToInventory();
+				playerInventory.addKeyToInventory();
 				//Remove key
 			}
 			else if(found.CompareTag("Exit"))
 			{
-				if(transform.GetComponent<Inventory>().getKeys() == 3)
+				if(playerInventory.getKeys() == 3)
 				{
 					print("YOU WIN YOU FUCK");
 					//Load Scene of win screen

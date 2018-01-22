@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour {
-
+public class Inventory : MonoBehaviour 
+{
 	int keys;
 	List<Bucket> currentBuckets;
 	// Use this for initialization
-	void Start () {
-		
+	void Start () 
+	{
+		keys = 0;
+		currentBuckets = new List<Bucket>();
 	}
 	// Update is called once per frame
 	void Update () {
@@ -25,5 +27,6 @@ public class Inventory : MonoBehaviour {
 	public void addBucketToInventory(Bucket newBucket)
 	{
 		currentBuckets.Add(newBucket);
+		print("Added: " + newBucket.color);
 	}
 }

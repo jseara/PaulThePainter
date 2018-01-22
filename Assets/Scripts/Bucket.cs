@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bucket : MonoBehaviour 
 {
-	string color;
+	public string color;
 	// Use this for initialization
 	void Start () {
 		
