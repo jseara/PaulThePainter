@@ -4,9 +4,39 @@ using UnityEngine;
 
 public class PlayerInteractions : MonoBehaviour 
 {
+	public float detectionRadius;
+	public LayerMask layer;
+
 	// Use this for initialization
-	void onClick()
-	{
+	void Update(){
+		Collider2D found = Physics2D.OverlapCircle(transform.position, detectionRadius, layer);
+		if (found)
+		{
+			if(found.CompareTag("Bucket"))
+			{
+				//Enable button to pick it up
+				transform.GetComponent<Inventory>().addBucketToInventory(found.GetComponent<Bucket>());
+				//Remove 
+			}
+			else if(found.CompareTag("Well"))
+			{
+				//Enable button to clean yourself off
+				clearPaint();
+			}
+			else if(found.CompareTag("Key"))
+			{
+				transform.GetComponent<Inventory>().addKeyToInventory();
+				//Remove key
+			}
+			else if(found.CompareTag("Exit"))
+			{
+				if(transform.GetComponent<Inventory>().getKeys() == 3)
+				{
+					print("YOU WIN YOU FUCK");
+					//Load Scene of win screen
+				}
+			}
+		}
 		//if(Input.GetKeyDown(key: "G"))
 		//{
 			//Pick-up items
@@ -31,4 +61,12 @@ public class PlayerInteractions : MonoBehaviour
 		//}
 	}
 
+	void applyPaint()
+	{
+
+	}
+	void clearPaint()
+	{
+
+	}
 }
