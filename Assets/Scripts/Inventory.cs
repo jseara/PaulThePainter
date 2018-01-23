@@ -29,4 +29,9 @@ public class Inventory : MonoBehaviour
 		currentBuckets.Add(newBucket);
 		print("Added: " + newBucket.color);
 	}
+
+	public List<Bucket> getBucketList()
+	{
+		return currentBuckets;
+	}
 }

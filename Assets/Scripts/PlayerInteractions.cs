@@ -5,15 +5,17 @@ using UnityEngine;
 public class PlayerInteractions : MonoBehaviour 
 {
 	public float detectionRadius;
+	string currentColor = null;
 	public LayerMask layer;
-
+	public Sprite purpleSprite, greenSprite, orangeSprite, yellowSprite, blueSprite, redSprite;
 	Inventory playerInventory; 
 	void Start()
 	{
 		playerInventory = transform.GetComponent<Inventory>();
 	}
 	// Use this for initialization
-	void Update(){
+	void Update()
+	{
 		Collider2D found = Physics2D.OverlapCircle(transform.position, detectionRadius, layer);
 		if (found)
 		{
@@ -35,6 +37,7 @@ public class PlayerInteractions : MonoBehaviour
 			else if(found.CompareTag("Key"))
 			{
 				playerInventory.addKeyToInventory();
+				Destroy(found.gameObject);
 				//Remove key
 			}
 			else if(found.CompareTag("Exit"))
@@ -45,6 +48,10 @@ public class PlayerInteractions : MonoBehaviour
 					//Load Scene of win screen
 				}
 			}
+		}
+		if (Input.GetKeyDown(KeyCode.R))
+		{
+			applyPaint();
 		}
 		//if(Input.GetKeyDown(key: "G"))
 		//{
@@ -72,6 +79,57 @@ public class PlayerInteractions : MonoBehaviour
 
 	void applyPaint()
 	{
+		bool Red = false, Blue = false, Yellow = false;
+		List<Bucket> currentPaint = transform.GetComponent<Inventory>().getBucketList();
+		for (int i = 0; i < currentPaint.Count; i++)
+		{
+			if (currentPaint[i].color == "Red")
+			{
+				Red = true;
+			}
+			if (currentPaint[i].color == "Blue")
+			{
+				Blue = true;
+				print("Beep");
+			}
+			if (currentPaint[i].color == "Yellow")
+			{
+				Yellow = true;
+			}
+			print(currentPaint[i].color);
+		}
+		print(Blue);
+		if(currentColor == null)
+		{
+			if (Red)
+			{
+				if (Red & Yellow)
+				{
+					transform.GetComponent<SpriteRenderer>().sprite = orangeSprite;
+				}
+				else if (Red & Blue)
+				{
+					transform.GetComponent<SpriteRenderer>().sprite = purpleSprite;
+				}
+				else
+					transform.GetComponent<SpriteRenderer>().sprite = redSprite;
+			}
+			else if (Yellow)
+			{
+				if (Yellow & Blue)
+				{
+					transform.GetComponent<SpriteRenderer>().sprite = greenSprite;
+				}
+				else
+					transform.GetComponent<SpriteRenderer>().sprite = yellowSprite;
+			}
+			else if (Blue)
+			{
+				transform.GetComponent<SpriteRenderer>().sprite = blueSprite;
+			}
+			else
+				print("Fuck");
+		}
 
 	}
 	void clearPaint()
