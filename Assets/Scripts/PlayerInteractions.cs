@@ -22,10 +22,7 @@ public class PlayerInteractions : MonoBehaviour
 			if(found.CompareTag("Bucket"))
 			{
 				Bucket foundBucket = found.GetComponentInParent<Bucket>();
-				if (foundBucket != null)
-				{
-					print("This exists, and is the color: " + foundBucket.color);
-				}
+
 				playerInventory.addBucketToInventory(foundBucket);
 				Destroy(found.gameObject);
 			}
@@ -90,7 +87,6 @@ public class PlayerInteractions : MonoBehaviour
 			if (currentPaint[i].color == "Blue")
 			{
 				Blue = true;
-				print("Beep");
 			}
 			if (currentPaint[i].color == "Yellow")
 			{
@@ -99,8 +95,10 @@ public class PlayerInteractions : MonoBehaviour
 			print(currentPaint[i].color);
 		}
 		print(Blue);
+		print(currentColor);
 		if(currentColor == null)
 		{
+			print("Ree");
 			if (Red)
 			{
 				if (Red & Yellow)
@@ -125,6 +123,7 @@ public class PlayerInteractions : MonoBehaviour
 			}
 			else if (Blue)
 			{
+				print("Nani");
 				transform.GetComponent<SpriteRenderer>().sprite = blueSprite;
 			}
 			else
