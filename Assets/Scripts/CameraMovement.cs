@@ -13,6 +13,8 @@ public class CameraMovement : MonoBehaviour {
     public LayerMask targetMask;
     public LayerMask obstacleMask;
 
+	public string targetColor;
+
     [HideInInspector]
     public List<Transform> visibleTargets = new List<Transform>();
 	public MeshFilter viewMeshFilter;
@@ -55,11 +57,16 @@ public class CameraMovement : MonoBehaviour {
                 float dstToTarget = Vector3.Distance(transform.position, target.position);
                 //If line draw from object to target is not interrupted by wall, add target to list of visible 
                 //targets
-                if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask)) 
-				{
+                //if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask)) 
+				//{
                     visibleTargets.Add(target);
-					print("You lose!");
-                }
+					string playerColor = targetsInViewRadius[i].GetComponentInParent<PlayerInteractions>().currentColor;
+					if(!playerColor.Equals(targetColor))
+					{
+						print("You lose!");
+					}
+					
+                //}
             }
         }
     }

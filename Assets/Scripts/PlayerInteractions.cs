@@ -5,9 +5,11 @@ using UnityEngine;
 public class PlayerInteractions : MonoBehaviour 
 {
 	public float detectionRadius;
-	string currentColor = null;
+	[HideInInspector]
+	public string currentColor = null;
 	public LayerMask layer;
 	public Sprite purpleSprite, greenSprite, orangeSprite, yellowSprite, blueSprite, redSprite;
+	public Bucket blueBucket, redBucket, yellowBucket;
 	Inventory playerInventory; 
 	void Start()
 	{
@@ -28,7 +30,6 @@ public class PlayerInteractions : MonoBehaviour
 			}
 			else if(found.CompareTag("Well"))
 			{
-				//Enable button to clean yourself off
 				clearPaint();
 			}
 			else if(found.CompareTag("Key"))
@@ -96,43 +97,55 @@ public class PlayerInteractions : MonoBehaviour
 		}
 		print(Blue);
 		print(currentColor);
-		if(currentColor == null)
-		{
-			print("Ree");
+		//if(currentColor == null)
+		//{
 			if (Red)
 			{
 				if (Red & Yellow)
 				{
+					currentColor = "Orange";
 					transform.GetComponent<SpriteRenderer>().sprite = orangeSprite;
 				}
 				else if (Red & Blue)
 				{
+					currentColor = "Purple";
 					transform.GetComponent<SpriteRenderer>().sprite = purpleSprite;
 				}
 				else
+					currentColor = "Red";
 					transform.GetComponent<SpriteRenderer>().sprite = redSprite;
 			}
 			else if (Yellow)
 			{
 				if (Yellow & Blue)
 				{
+					currentColor = "Green";
 					transform.GetComponent<SpriteRenderer>().sprite = greenSprite;
 				}
 				else
+					currentColor = "Yellow";
 					transform.GetComponent<SpriteRenderer>().sprite = yellowSprite;
 			}
 			else if (Blue)
 			{
-				print("Nani");
+				currentColor = "Blue";
 				transform.GetComponent<SpriteRenderer>().sprite = blueSprite;
 			}
 			else
 				print("Fuck");
-		}
+	//}
 
 	}
 	void clearPaint()
 	{
+	//	currentColor = null;
+	//	Vector2 blueBucketPos = new Vector2(-4.92977f, -1.64967f);
+	//	Bucket newBlueBucket = (Bucket)Instantiate(blueBucket, blueBucketPos, Quaternion.identity);
 
+	//	Vector2 yellowBucketPos = new Vector2(6.217075f, -4.19303f);
+	//	Bucket newYellowBucket = (Bucket)Instantiate(yellowBucket, yellowBucketPos, Quaternion.identity);
+
+	//	Vector2 redBucketPos = new Vector2(0f, 0.75f);
+	//	Bucket newRedBucket = (Bucket)Instantiate(redBucket, redBucketPos, Quaternion.identity);
 	}
 }
