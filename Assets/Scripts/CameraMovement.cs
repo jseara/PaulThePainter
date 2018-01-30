@@ -13,6 +13,7 @@ public class CameraMovement : MonoBehaviour {
     public LayerMask targetMask;
     public LayerMask obstacleMask;
 
+	public GameObject endPanel;
 	public string targetColor;
 
     [HideInInspector]
@@ -21,6 +22,7 @@ public class CameraMovement : MonoBehaviour {
 	Mesh viewMesh;
     void Start() 
 	{
+		endPanel.SetActive(false);
 		viewMesh = new Mesh ();
 		viewMesh.name = "View Mesh";
 		viewMeshFilter.mesh = viewMesh;
@@ -63,6 +65,8 @@ public class CameraMovement : MonoBehaviour {
 					string playerColor = targetsInViewRadius[i].GetComponentInParent<PlayerInteractions>().currentColor;
 					if(!playerColor.Equals(targetColor))
 					{
+						Time.timeScale = 0;
+						endPanel.SetActive(true);
 						print("You lose!");
 					}
 					

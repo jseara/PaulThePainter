@@ -10,10 +10,13 @@ public class PlayerInteractions : MonoBehaviour
 	public LayerMask layer;
 	public Sprite purpleSprite, greenSprite, orangeSprite, yellowSprite, blueSprite, redSprite;
 	public Bucket blueBucket, redBucket, yellowBucket;
+	public GameObject endPanel;
+
 	Inventory playerInventory; 
 	void Start()
 	{
 		playerInventory = transform.GetComponent<Inventory>();
+		endPanel.SetActive(false);
 	}
 	// Use this for initialization
 	void Update()
@@ -26,22 +29,25 @@ public class PlayerInteractions : MonoBehaviour
 				Bucket foundBucket = found.GetComponentInParent<Bucket>();
 
 				playerInventory.addBucketToInventory(foundBucket);
-				Destroy(found.gameObject);
+				found.gameObject.SetActive(false);
 			}
 			else if(found.CompareTag("Well"))
 			{
+
 				clearPaint();
 			}
 			else if(found.CompareTag("Key"))
 			{
 				playerInventory.addKeyToInventory();
-				Destroy(found.gameObject);
+				found.gameObject.SetActive(false);
 				//Remove key
 			}
 			else if(found.CompareTag("Exit"))
 			{
 				if(playerInventory.getKeys() == 3)
 				{
+					Time.timeScale = 0;
+					endPanel.SetActive(true);
 					print("YOU WIN YOU FUCK");
 					//Load Scene of win screen
 				}
@@ -95,25 +101,35 @@ public class PlayerInteractions : MonoBehaviour
 			}
 			print(currentPaint[i].color);
 		}
-		print(Blue);
-		print(currentColor);
+		
 		//if(currentColor == null)
 		//{
 			if (Red)
 			{
+				print("have red");
 				if (Red & Yellow)
 				{
 					currentColor = "Orange";
+					print(currentColor);
 					transform.GetComponent<SpriteRenderer>().sprite = orangeSprite;
+					transform.GetComponent<Inventory>().emptyBucketList();
 				}
 				else if (Red & Blue)
 				{
+					print("??????");
 					currentColor = "Purple";
+					print(purpleSprite);
 					transform.GetComponent<SpriteRenderer>().sprite = purpleSprite;
+					Blue = false;
+					Yellow = false;
+					transform.GetComponent<Inventory>().emptyBucketList();
 				}
 				else
+					print("bitch");
 					currentColor = "Red";
 					transform.GetComponent<SpriteRenderer>().sprite = redSprite;
+					Red = false;
+					transform.GetComponent<Inventory>().emptyBucketList();
 			}
 			else if (Yellow)
 			{
@@ -121,15 +137,22 @@ public class PlayerInteractions : MonoBehaviour
 				{
 					currentColor = "Green";
 					transform.GetComponent<SpriteRenderer>().sprite = greenSprite;
+					Yellow = false;
+					Blue = false;
+					transform.GetComponent<Inventory>().emptyBucketList();
 				}
 				else
 					currentColor = "Yellow";
 					transform.GetComponent<SpriteRenderer>().sprite = yellowSprite;
+					Yellow = false;
+					transform.GetComponent<Inventory>().emptyBucketList();
 			}
 			else if (Blue)
 			{
 				currentColor = "Blue";
 				transform.GetComponent<SpriteRenderer>().sprite = blueSprite;
+				Blue = false;
+				transform.GetComponent<Inventory>().emptyBucketList();
 			}
 			else
 				print("Fuck");
@@ -141,6 +164,7 @@ public class PlayerInteractions : MonoBehaviour
 	//	currentColor = null;
 	//	Vector2 blueBucketPos = new Vector2(-4.92977f, -1.64967f);
 	//	Bucket newBlueBucket = (Bucket)Instantiate(blueBucket, blueBucketPos, Quaternion.identity);
+
 
 	//	Vector2 yellowBucketPos = new Vector2(6.217075f, -4.19303f);
 	//	Bucket newYellowBucket = (Bucket)Instantiate(yellowBucket, yellowBucketPos, Quaternion.identity);

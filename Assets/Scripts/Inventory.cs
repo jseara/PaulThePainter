@@ -29,7 +29,11 @@ public class Inventory : MonoBehaviour
 		currentBuckets.Add(newBucket);
 		print("Added: " + newBucket.color);
 	}
-
+	
+	public void emptyBucketList()
+	{
+		currentBuckets.Clear();
+	}
 	public List<Bucket> getBucketList()
 	{
 		return currentBuckets;
